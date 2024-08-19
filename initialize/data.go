@@ -111,6 +111,10 @@ func MysqlInit(config *conf.MysqlConfig) {
 		//domain.SysCasbin{},
 		domain.SysApi{},
 		domain.SysMenu{},
+		domain.User{},
+		domain.Follow{},
+		domain.Video{},
+		domain.Moving{},
 	)
 
 	global.DB = db
