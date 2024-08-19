@@ -1,0 +1,1386 @@
+basePath: /
+definitions:
+  domain.Demo:
+    properties:
+      id:
+        description: 主键
+        type: integer
+    type: object
+  domain.File:
+    properties:
+      alreadyChunk:
+        description: 已经上传的分片
+        type: string
+      fileMd5:
+        description: 文件MD5
+        type: string
+      fileName:
+        description: 文件名
+        type: string
+      filePath:
+        description: 文件路径
+        type: string
+      fileSize:
+        description: 文件大小
+        type: string
+      id:
+        description: 文件唯一标识
+        type: integer
+      index:
+        description: 当前分片
+        type: integer
+      isFinish:
+        description: 是否完成
+        type: boolean
+      totalChunk:
+        description: 文件总分片数
+        type: integer
+    type: object
+  domain.LoginReq:
+    properties:
+      account:
+        description: 账号
+        type: string
+      password:
+        description: 密码
+        type: string
+    required:
+    - account
+    - password
+    type: object
+  domain.RolePermissionsReq:
+    properties:
+      permissions:
+        additionalProperties:
+          type: string
+        type: object
+      role:
+        type: integer
+    type: object
+  domain.SysApi:
+    properties:
+      id:
+        type: integer
+      method:
+        type: string
+      name:
+        type: string
+      path:
+        type: string
+    type: object
+  domain.SysCasbin:
+    type: object
+  domain.SysMenu:
+    properties:
+      children:
+        items:
+          $ref: '#/definitions/domain.SysMenu'
+        type: array
+      description:
+        description: 描述
+        type: string
+      icon:
+        description: 图标
+        type: string
+      id:
+        description: 主键
+        type: integer
+      name:
+        description: 菜单名称
+        type: string
+      parent_id:
+        description: 上层菜单
+        type: integer
+    type: object
+  domain.SysRole:
+    properties:
+      children:
+        description: 角色列表
+        items:
+          $ref: '#/definitions/domain.SysRole'
+        type: array
+      id:
+        description: 主键
+        type: integer
+      menus:
+        description: 菜单列表
+        items:
+          $ref: '#/definitions/domain.SysMenu'
+        type: array
+      parent_id:
+        type: integer
+      role_name:
+        type: string
+    type: object
+  domain.SysUser:
+    properties:
+      account:
+        description: 账号
+        type: string
+      default_role:
+        description: 当前角色
+        type: integer
+      id:
+        description: 主键
+        type: integer
+      nick_name:
+        description: 昵称
+        type: string
+      password:
+        description: 密码
+        type: string
+      roles:
+        description: 角色列表
+        items:
+          $ref: '#/definitions/domain.SysRole'
+        type: array
+    type: object
+  request.Ids:
+    properties:
+      ids:
+        description: id切片
+        items:
+          type: integer
+        type: array
+    type: object
+info:
+  contact: {}
+  description: This is a sample Server pets
+  title: Swagger Example API
+  version: 0.0.1
+paths:
+  /demo:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除Demo
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Demo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 删除Demo
+      tags:
+      - Demo
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建Demo
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Demo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 创建Demo
+      tags:
+      - Demo
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改Demo
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Demo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 修改Demo
+      tags:
+      - Demo
+  /demo/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询Demo
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      summary: 查询Demo
+      tags:
+      - Demo
+  /demo/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除Demo
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 批量删除Demo
+      tags:
+      - Demo
+  /demo/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 主键
+        in: query
+        name: id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      summary: 查询Demo列表
+      tags:
+      - Demo
+  /file:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除File
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.File'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 删除File
+      tags:
+      - File
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询File
+        in: query
+        name: fileMd5
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      summary: 查询File
+      tags:
+      - File
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建File
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.File'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 创建File
+      tags:
+      - File
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改File
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.File'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 修改File
+      tags:
+      - File
+  /file/chunkid:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 获取分块文件id
+      tags:
+      - File
+  /file/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除File
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 批量删除File
+      tags:
+      - File
+  /file/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 已经上传的分片
+        in: query
+        name: alreadyChunk
+        type: string
+      - description: 文件MD5
+        in: query
+        name: fileMd5
+        type: string
+      - description: 文件名
+        in: query
+        name: fileName
+        type: string
+      - description: 文件路径
+        in: query
+        name: filePath
+        type: string
+      - description: 文件大小
+        in: query
+        name: fileSize
+        type: string
+      - description: 文件唯一标识
+        in: query
+        name: id
+        type: integer
+      - description: 当前分片
+        in: query
+        name: index
+        type: integer
+      - description: 是否完成
+        in: query
+        name: isFinish
+        type: boolean
+      - description: 文件总分片数
+        in: query
+        name: totalChunk
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      summary: 查询File列表
+      tags:
+      - File
+  /file/merge-chunk:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 合并分片文件
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.File'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 合并分片文件
+      tags:
+      - File
+  /file/upload:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 普通上传File
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 普通上传File
+      tags:
+      - File
+  /file/upload-chunk:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: 分片上传File
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 分片上传File
+      tags:
+      - File
+  /sysApi:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除SysApi
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SysApi
+      tags:
+      - SysApi
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建SysApi
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建SysApi
+      tags:
+      - SysApi
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改SysApi
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysApi'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 修改SysApi
+      tags:
+      - SysApi
+  /sysApi/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询SysApi
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysApi
+      tags:
+      - SysApi
+  /sysApi/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除SysApi
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除SysApi
+      tags:
+      - SysApi
+  /sysApi/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - in: query
+        name: id
+        type: integer
+      - description: 关键词
+        in: query
+        name: keyword
+        type: string
+      - in: query
+        name: method
+        type: string
+      - in: query
+        name: name
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页显示数量
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: path
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysApi列表
+      tags:
+      - SysApi
+  /sysCasbin:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除SysCasbin
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysCasbin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SysCasbin
+      tags:
+      - SysCasbin
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建SysCasbin
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.RolePermissionsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 设置角色权限
+      tags:
+      - SysCasbin
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改SysCasbin
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysCasbin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 修改SysCasbin
+      tags:
+      - SysCasbin
+  /sysCasbin/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询SysCasbin
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysCasbin
+      tags:
+      - SysCasbin
+  /sysCasbin/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除SysCasbin
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除SysCasbin
+      tags:
+      - SysCasbin
+  /sysCasbin/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 关键词
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页显示数量
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysCasbin列表
+      tags:
+      - SysCasbin
+  /sysMenu:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除SysMenu
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SysMenu
+      tags:
+      - SysMenu
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建SysMenu
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建SysMenu
+      tags:
+      - SysMenu
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改SysMenu
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysMenu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 修改SysMenu
+      tags:
+      - SysMenu
+  /sysMenu/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询SysMenu
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysMenu
+      tags:
+      - SysMenu
+  /sysMenu/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除SysMenu
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除SysMenu
+      tags:
+      - SysMenu
+  /sysMenu/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 描述
+        in: query
+        name: description
+        type: string
+      - description: 图标
+        in: query
+        name: icon
+        type: string
+      - description: 主键
+        in: query
+        name: id
+        type: integer
+      - description: 关键词
+        in: query
+        name: keyword
+        type: string
+      - description: 菜单名称
+        in: query
+        name: name
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页显示数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 上层菜单
+        in: query
+        name: parent_id
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysMenu列表
+      tags:
+      - SysMenu
+  /sysMenu/role-list:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询当前角色菜单列表
+      tags:
+      - SysMenu
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 设置角色菜单列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 设置角色菜单列表
+      tags:
+      - SysMenu
+  /sysRole:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除SysRole
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SysRole
+      tags:
+      - SysRole
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建SysRole
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建SysRole
+      tags:
+      - SysRole
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改SysRole
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysRole'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 修改SysRole
+      tags:
+      - SysRole
+  /sysRole/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询SysRole
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysRole
+      tags:
+      - SysRole
+  /sysRole/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除SysRole
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除SysRole
+      tags:
+      - SysRole
+  /sysRole/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 主键
+        in: query
+        name: id
+        type: integer
+      - description: 关键词
+        in: query
+        name: keyword
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页显示数量
+        in: query
+        name: pageSize
+        type: integer
+      - in: query
+        name: parent_id
+        type: integer
+      - in: query
+        name: role_name
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysRole列表
+      tags:
+      - SysRole
+  /sysRole/user-list:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 设置用户角色列表
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 设置用户角色列表
+      tags:
+      - SysRole
+  /sysUser:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 删除SysUser
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 删除SysUser
+      tags:
+      - SysUser
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 创建SysUser
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 创建SysUser
+      tags:
+      - SysUser
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: 修改SysUser
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.SysUser'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 修改SysUser
+      tags:
+      - SysUser
+  /sysUser/{id}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 查询SysUser
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysUser
+      tags:
+      - SysUser
+  /sysUser/delete-batch:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: 批量删除SysUser
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Ids'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 批量删除SysUser
+      tags:
+      - SysUser
+  /sysUser/info:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 用户信息
+      tags:
+      - SysUser
+  /sysUser/list:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: 账号
+        in: query
+        name: account
+        type: string
+      - description: 当前角色
+        in: query
+        name: default_role
+        type: integer
+      - description: 主键
+        in: query
+        name: id
+        type: integer
+      - description: 关键词
+        in: query
+        name: keyword
+        type: string
+      - description: 昵称
+        in: query
+        name: nick_name
+        type: string
+      - description: 页码
+        in: query
+        name: pageNum
+        type: integer
+      - description: 每页显示数量
+        in: query
+        name: pageSize
+        type: integer
+      - description: 密码
+        in: query
+        name: password
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"查询成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 查询SysUser列表
+      tags:
+      - SysUser
+  /sysUser/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 登录参数
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/domain.LoginReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"登录成功","data":{}"}'
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: SysUser登录
+      tags:
+      - SysUser
+  /system/init:
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":200,"msg":"","data":{}"}'
+          schema:
+            type: string
+      summary: 系统初始化
+      tags:
+      - System
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
